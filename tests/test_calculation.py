@@ -1,6 +1,7 @@
 import pytest
 from decimal import Decimal
 from datetime import datetime
+from unittest.mock import patch
 from app.calculation import Calculation
 from app.exceptions import OperationError
 import logging
@@ -122,3 +123,20 @@ def test_from_dict_result_mismatch(caplog):
         calc = Calculation.from_dict(data)
 
     assert "Loaded calculation result 10 differs from computed result 5" in caplog.text
+
+
+def test_calculate_wraps_arithmetic_error():
+    with patch("app.calculation.pow", side_effect=ArithmeticError("boom")):
+        with pytest.raises(OperationError, match="Calculation failed: boom"):
+            Calculation(operation="Power", operand1=Decimal("2"), operand2=Decimal("3"))
+
+
+def test_string_and_repr_methods():
+    calc = Calculation(operation="Addition", operand1=Decimal("2"), operand2=Decimal("3"))
+    assert str(calc) == "Addition(2, 3) = 5"
+    assert repr(calc).startswith("Calculation(operation='Addition',")
+
+
+def test_equality_with_non_calculation_returns_notimplemented():
+    calc = Calculation(operation="Addition", operand1=Decimal("2"), operand2=Decimal("3"))
+    assert Calculation.__eq__(calc, object()) is NotImplemented
