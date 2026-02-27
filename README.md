@@ -1,6 +1,6 @@
 # Interactive Calculator Command-Line Application
 
-A simple command-line calculator implemented in Python. The application supports basic arithmetic operations and includes automated tests using `pytest`.
+A command-line calculator implemented in Python. The application supports basic arithmetic operations and includes automated tests using `pytest` as well as data management using `pandas`.
 
 ## Features
 
@@ -11,24 +11,35 @@ A simple command-line calculator implemented in Python. The application supports
   * multiply
   * divide
   * power
+  * root
 * Input validation and error handling
-* Unit tests and parameterized tests for the calculator and operations
+* Unit tests and parameterized tests via `pytest`
+* Persistent data management via `pandas`
 
 ## Project Structure
 
 ```
 app/
 ├── __init__.py
-├── calculation/
-    └── __init__.py
-├── calculator/
-    └── __init__.py
-├── operations/
-    └── __init__.py
+├── calculation.py
+├── calculator.py
+├── calculator_config.py
+├── calculator_memento.py
+├── calculator_repl.py
+├── exceptions.py
+├── history.py
+├── input_validators.py
+└── operations.py
 tests/
 ├── __init__.py
 ├── test_calculation.py
+├── test_calculator_config.py
+├── test_calculator_memento.py
+├── test_calculator_repl.py
 ├── test_calculator.py
+├── test_exceptions.py
+├── test_history.py
+├── test_input_validators.py
 └── test_operations.py
 ```
 
@@ -36,15 +47,14 @@ tests/
 
 * `Git`
 * `Python 3.10` or newer
-* `pytest`
 
 ## Setup
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/thejps92/is601-module3-assignment.git
-cd is601-module3-assignment
+git clone https://github.com/thejps92/is601-module5-assignment.git
+cd is601-module5-assignment
 ```
 
 Create and activate a virtual environment, then install dependencies:
@@ -70,7 +80,13 @@ python main.py
 You will be prompted to enter an operation and two numbers:
 
 ```
-add 2 3
+add
+```
+```
+2
+```
+```
+3
 ```
 
 Type `exit` to exit the calculator.
